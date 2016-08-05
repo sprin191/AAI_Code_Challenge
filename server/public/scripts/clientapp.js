@@ -3,13 +3,13 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngModal', 'ui.bootstrap']);
 myApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
 
-    .when('/admin', {
-      templateUrl: '/views/admin.html',
-      controller: "AdminController"
+    .when('/home', {
+      templateUrl: '/views/home.html',
+      controller: "HomeController"
     })
 
     .otherwise({
-      redirectTo: '/admin'
+      redirectTo: '/home'
     });
 
 }

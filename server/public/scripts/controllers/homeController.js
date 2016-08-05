@@ -1,4 +1,4 @@
-myApp.controller('AdminController', ['$scope', '$http', '$location', 'ApplicantFactory', 'UserFactory', '$window',  function($scope, $http, $location, ApplicantFactory, UserFactory, $window)
+myApp.controller('HomeController', ['$scope', '$http', '$location', '$window',  function($scope, $http, $location, $window)
 {
 
   //Retrieves a random pet from the API database based on the user's selected animal type.
