@@ -2,7 +2,7 @@ myApp.controller('HomeController', ['$scope', '$http', '$location', '$window',  
 {
 
   //Retrieves a random pet from the API database based on the user's selected animal type.
-      $scope.getRandomPet = function() {
+      /*$scope.getRandomPet = function() {
           // API key
           var key = 'b900e0d5e332753a460a64eaa8de00fd';
           $scope.hidden = false;
@@ -22,7 +22,7 @@ myApp.controller('HomeController', ['$scope', '$http', '$location', '$window',  
                   console.log($scope.pet);
               }
           );
-      };
+      };*/
 
 
 
