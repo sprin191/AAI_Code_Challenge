@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vinna Vel</title>
+    <!--CSS-->
+    <link rel="stylesheet" href="/vendors/bootstrap.min.css" />
+    <link rel="stylesheet" href="/vendors/ng-modal.css"/>
+    <link rel="stylesheet" href="/styles/main.css">
+    <!--Scripts-->
+    <script type="text/javascript" src="/vendors/lodash.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular.min.js"></script>
+    <script type="text/javascript" src="/vendors/ui-bootstrap-tpls-1.3.3.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-route.min.js"></script>
+    <script type="text/javascript" src="/vendors/moment.min.js"></script>
+    <script type="text/javascript" src="/vendors/ng-modal.min.js"></script>
+    <script type="text/javascript" src="/scripts/clientapp.js"></script>
+    <!--Factories-->
+    <script type="text/javascript" src="/scripts/factories/applicantfactory.js"></script>
+    <script type="text/javascript" src="/scripts/factories/adminDataFactory.js"></script>
+    <script type="text/javascript" src="/scripts/factories/userFactory.js"></script>
+    <!--Controllers-->
+    <script type="text/javascript" src="/scripts/controllers/assessmentController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/TrainerController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/headerController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/HomeController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/userController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/AdminController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/adminCompanyController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/adminJobController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/adminTrainersController.js"></script>
+    <script type="text/javascript" src="/scripts/controllers/adminSearchController.js"></script>
+  </head>
+  <body ng-app="myApp">
+    <header ng-include="'../views/templates/header.html'"></header>
+
+    <main ng-view></main>
+
+    <footer ng-include="'../views/templates/footer.html'"></footer>
+
+
+  </body>
+</html>
