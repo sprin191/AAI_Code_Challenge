@@ -1,29 +1,67 @@
 myApp.controller('HomeController', ['$scope', '$http', '$location', '$window',  function($scope, $http, $location, $window)
 {
 
-  //Retrieves a random pet from the API database based on the user's selected animal type.
-      /*$scope.getRandomPet = function() {
-          // API key
-          var key = 'b900e0d5e332753a460a64eaa8de00fd';
-          $scope.hidden = false;
-          var baseURL = 'http://api.petfinder.com/';
-          var query = 'pet.getRandom';
-          query += '?key=' + key;
-          query += '&animal=' + $scope.animal;
-          query += '&output=basic';
-          query += '&format=json';
+$scope.video = {};
 
-          var request = baseURL + encodeURI(query) + '&callback=JSON_CALLBACK';
-          console.log(request);
+logIn();
 
-          $http.jsonp(request).then(
-              function(response) {
-                  $scope.pet = response.data.petfinder.pet;
-                  console.log($scope.pet);
-              }
-          );
-      };*/
+//Logs user into Proof API.
+function logIn () {
+var request = new XMLHttpRequest();
 
+request.open('POST', 'https://proofapi.herokuapp.com/sessions');
 
+request.setRequestHeader('Content-Type', 'application/json');
+
+request.onreadystatechange = function () {
+  if (this.readyState === 4) {
+    console.log('Status:', this.status);
+    console.log('Headers:', this.getAllResponseHeaders());
+    console.log('Body:', this.responseText);
+    var responseData = JSON.parse(this.responseText);
+    authToken = responseData.data.attributes.auth_token;
+    console.log(authToken);
+  }
+};
+
+var body = {
+  'email': 'hannahrspringer@gmail.com',
+  'password': 'Lusian,epibolic,fortravail'
+};
+
+request.send(JSON.stringify(body));
+
+}
+
+//Submits video.
+$scope.submitVideo = function () {
+
+var slug = $scope.video.title.replace(/\s+/g, '-').toLowerCase();
+console.log(slug);
+console.log($scope.video);
+
+var request = new XMLHttpRequest();
+
+request.open('POST', 'https://proofapi.herokuapp.com/videos');
+
+request.setRequestHeader('Content-Type', 'application/json');
+request.setRequestHeader('X-Auth-Token', authToken);
+
+request.onreadystatechange = function () {
+  if (this.readyState === 4) {
+    console.log('Status:', this.status);
+    console.log('Headers:', this.getAllResponseHeaders());
+    console.log('Body:', this.responseText);
+  }
+};
+
+var body = {
+  'title': $scope.video.title,
+  'url': $scope.video.url,
+  'slug': slug
+};
+
+request.send(JSON.stringify(body));
+};
 
 }]);

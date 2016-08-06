@@ -1,18 +1,21 @@
 <link rel="stylesheet" href="/styles/home.css">
 <div class="admin">
 <h2 class="adminHeader text-center">Welcome!</h2>
-<table class="borderless">
-<tr>
-  <th><a href="#companies"><button class="btn btn-secondary btn-lg adminButton">Companies</button></a></th>
-  <th></th>
-  <th><a href="#trainers"><button class="btn btn-secondary btn-lg adminButton">Trainers</button></a></th>
-</tr>
-<tr><th></th></tr>
-<tr><th></th></tr>
-<tr>
-  <th><a href="#applicant"><button class="btn btn-secondary btn-lg adminButton">FMS</button></a></th>
-  <th></th>
-  <th><a href="#search"><button class="btn btn-secondary btn-lg adminButton">Search Applicants</button></a></th>
-</tr>
-</table>
+
+<div class="videoForm">
+  <h3 class="formTitle">Submit A New Video</h3>
+  <form class="applicantForm">
+    <div class="row">
+      <label class="col-xs-1 col-xs-offset-1" for="video.title">Video Title: </label>
+      <input type="text" ng-model="video.title" required/>
+    </div>
+
+    <div class="row">
+      <label class="col-xs-1 col-xs-offset-1" for="video.url">Url: </label>
+      <input type="text" ng-model="video.url" required/>
+    </div>
+
+    <button class="col-xs-2 col-xs-offset-5" type="submit" ng-click="submitVideo()">Submit</button>
+    </form>
+  </div>
 </div>
