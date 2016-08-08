@@ -1,18 +1,23 @@
 <link rel="stylesheet" href="/styles/home.css">
 <div class="admin">
 <h2 class="adminHeader text-center">Welcome!</h2>
-<button ng-click="retrieveAllVideos()">See All Videos</button>
+<div class="allVideos" ng-repeat="video in allVideos">
+  <div class="video">
+    <h3>Hello</h3>
+    <h3>{{video.attributes.title}}</h3>
+  </div>
+</div>
 
 <div class="videoForm">
   <h3 class="formTitle">Submit A New Video</h3>
   <form class="applicantForm">
     <div class="row">
-      <label class="col-xs-1 col-xs-offset-1" for="video.title">Video Title: </label>
+      <label class="col-xs-1 col-xs-offset-1" for="video.title">Title: </label>
       <input type="text" ng-model="video.title" required/>
     </div>
 
     <div class="row">
-      <label class="col-xs-1 col-xs-offset-1" for="video.url">Url: </label>
+      <label class="col-xs-1 col-xs-offset-1" for="video.url">URL: </label>
       <input type="text" ng-model="video.url" required/>
     </div>
 

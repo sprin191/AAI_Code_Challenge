@@ -1,7 +1,7 @@
 myApp.controller('HomeController', ['$scope', '$http', '$location', '$window',  function($scope, $http, $location, $window)
 {
 
-$scope.video = {};
+$scope.allVideos = [];
 
 logIn();
 
@@ -21,6 +21,7 @@ request.onreadystatechange = function () {
     var responseData = JSON.parse(this.responseText);
     authToken = responseData.data.attributes.auth_token;
     console.log(authToken);
+    retrieveAllVideos();
   }
 };
 
@@ -33,7 +34,8 @@ request.send(JSON.stringify(body));
 
 }
 
-$scope.retrieveAllVideos = function() {
+//Retrives all videos in the API.
+function retrieveAllVideos() {
 var request = new XMLHttpRequest();
 
 request.open('GET', 'https://proofapi.herokuapp.com/videos?page&per_page');
@@ -46,12 +48,16 @@ request.onreadystatechange = function () {
     console.log('Status:', this.status);
     console.log('Headers:', this.getAllResponseHeaders());
     console.log('Body:', this.responseText);
+    var responseData = JSON.parse(this.responseText);
+    $scope.allVideos = responseData.data;
+    console.log($scope.allVideos);
+    console.log($scope.allVideos[0].attributes.title);
   }
 };
 
 request.send();
 
-};
+}
 
 //Submits a new video.
 $scope.submitVideo = function () {
