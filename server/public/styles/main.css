@@ -1,0 +1,13 @@
+.headerContainer {
+  padding: 2% 2% 2% 2%;
+  background-color: black;
+  color: white;
+}
+
+.headerTitle, .headerNav {
+  display: inline;
+}
+
+.headerNav {
+  float: right;
+}

@@ -1,8 +1,7 @@
-myApp.controller('HomeController', ['$scope', '$http', '$location', '$window',  function($scope, $http, $location, $window)
+myApp.controller('HomeController', ['$scope', '$http', '$location', '$window', '$sce', function($scope, $http, $location, $window, $sce)
 {
 
 $scope.allVideos = [];
-var auth = {};
 
 logIn();
 
@@ -11,8 +10,7 @@ function logIn () {
       $http.post('/proofAPI/login/')
         .then(function (response) {
           if (response.status == 200 ) {
-            auth.token = response.data.data.attributes.auth_token;
-            console.log(auth.token);
+            console.log("success!");
             retrieveAllVideos();
           } else {
             console.log("error");
@@ -23,12 +21,19 @@ function logIn () {
 
 //Retrives all videos in the API.
 function retrieveAllVideos() {
-  console.log(auth);
-  $http.get('/proofAPI/videos', auth)
+  $http.get('/proofAPI/videos')
     .then(function (response) {
       if (response.status == 200) {
         console.log(response);
         $scope.allVideos = response.data.data;
+        for (i = 0; i < $scope.allVideos.length; i++) {
+        //console.log($scope.allVideos[i].attributes.url);
+        $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("watch?v=", "v/");
+        $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("youtu.be/", "www.youtube.com/v/");
+        $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("/vimeo.com/", "/player.vimeo.com/video/");
+        $scope.allVideos[i].attributes.url = $sce.trustAsResourceUrl($scope.allVideos[i].attributes.url);
+        //console.log($scope.allVideos[i].attributes.url);
+      }
       } else {
         console.log("error");
         return;
@@ -43,28 +48,32 @@ var slug = $scope.video.title.replace(/\s+/g, '-').toLowerCase();
 console.log(slug);
 console.log($scope.video);
 
-var request = new XMLHttpRequest();
-
-request.open('POST', 'https://proofapi.herokuapp.com/videos');
-
-request.setRequestHeader('Content-Type', 'application/json');
-request.setRequestHeader('X-Auth-Token', authToken);
-
-request.onreadystatechange = function () {
-  if (this.readyState === 4) {
-    console.log('Status:', this.status);
-    console.log('Headers:', this.getAllResponseHeaders());
-    console.log('Body:', this.responseText);
-  }
-};
-
 var body = {
   'title': $scope.video.title,
   'url': $scope.video.url,
   'slug': slug
 };
 
-request.send(JSON.stringify(body));
+$http.post('/proofAPI/add-video', body)
+  .then(function (response) {
+    if (response.status == 201 ) {
+      console.log("success!");
+      retrieveAllVideos();
+    } else {
+      console.log("error");
+      return;
+    }
+  });
 };
+
+/*//Deletes errored video.
+function deleteVid () {
+var id = "575989a6-6d3d-429c-b1b6-7d2daca80185";
+  $http.delete('/proofAPI/' + id)
+    .then(function (response) {
+      console.log("delete success!");
+      return;
+    });
+}*/
 
 }]);

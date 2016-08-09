@@ -37,4 +37,38 @@ request({
 });
 });
 
+router.post('/add-video', function (req, res) {
+console.log("lalalala", req.body);
+request({
+  method: 'POST',
+  url: 'https://proofapi.herokuapp.com/videos',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Auth-Token': authToken
+  },
+  body: JSON.stringify(req.body)
+}, function (error, response, body) {
+  console.log('Status:', response.statusCode);
+  console.log('Headers:', JSON.stringify(response.headers));
+  console.log('Response:', body);
+});
+});
+
+//Deletes errored video.
+router.delete('/:id', function (req, res) {
+var id = req.params.id;
+console.log("delete" + id);
+request({
+  method: 'DELETE',
+  url: 'https://proofapi.herokuapp.com/videos/' + req.params.id,
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Auth-Token': authToken
+  }}, function (error, response, body) {
+  console.log('Status:', response.statusCode);
+  console.log('Headers:', JSON.stringify(response.headers));
+  console.log('Response:', body);
+});
+});
+
 module.exports = router;

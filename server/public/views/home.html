@@ -1,15 +1,9 @@
 <link rel="stylesheet" href="/styles/home.css">
-<div class="admin">
-<h2 class="adminHeader text-center">Welcome!</h2>
-<div class="allVideos" ng-repeat="video in allVideos">
-  <div class="video">
-    <h4>{{video.attributes.title}}</h4>
-  </div>
-</div>
+<div class="formContainer">
 
 <div class="videoForm">
   <h3 class="formTitle">Submit A New Video</h3>
-  <form class="applicantForm">
+  <form class="formInfo">
     <div class="row">
       <label class="col-xs-1 col-xs-offset-1" for="video.title">Title: </label>
       <input type="text" ng-model="video.title" required/>
@@ -22,5 +16,19 @@
 
     <button class="col-xs-2 col-xs-offset-5" type="submit" ng-click="submitVideo()">Submit</button>
     </form>
+  </div>
+</div>
+
+<h2 class="title">All Videos</h2>
+
+<div class="allVideos" ng-repeat="video in allVideos | orderBy:'attributes.created_at':true">
+  <div class="video col-md-6">
+    <h4>{{video.attributes.title}}</h4>
+    <h4>Created: {{video.attributes.created_at}}</h4>
+    <h4>Views: {{video.attributes.view_tally}}</h4>
+    <h4>Votes: {{video.attributes.vote_tally}}</h4>
+    <iframe width="420" height="315"
+src="{{video.attributes.url}}">
+</iframe>
   </div>
 </div>
