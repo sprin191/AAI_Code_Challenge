@@ -5,12 +5,7 @@ var path = require('path');
 
 
 //route variables
-var admin = require('./routes/admin');
-
-
-//Modules
-var Connection = require('./modules/connection');
-
+var proofAPI = require('./routes/proofAPI');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, './public')));
 
 // Routes
-app.use('/admin', admin);
+app.use('/proofAPI', proofAPI);
 
 // Handle index file separately
 app.get('/', function (req, res) {
