@@ -1,13 +1,31 @@
+main {
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  padding: 3%;
+  border: #d0d1d5 1px solid;
+}
+
 .headerContainer {
   padding: 2% 2% 2% 2%;
   background-color: black;
   color: white;
 }
 
-.headerTitle, .headerNav {
+.headerTitle, .headerNav, .title {
   display: inline;
 }
 
 .headerNav {
   float: right;
+}
+
+.titleContainer {
+  padding: 2%;
+}
+
+a:hover {
+  cursor: pointer;
 }

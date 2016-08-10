@@ -1,7 +1,11 @@
 myApp.controller('HomeController', ['$scope', '$http', '$location', '$window', '$sce', function($scope, $http, $location, $window, $sce)
 {
 
+$scope.video = {};
 $scope.allVideos = [];
+$scope.show1 = true;
+$scope.show2 = false;
+$scope.show3 = false;
 
 logIn();
 
@@ -64,6 +68,24 @@ $http.post('/proofAPI/add-video', body)
       return;
     }
   });
+};
+
+$scope.seeAll = function () {
+  $scope.show1 = true;
+  $scope.show2 = false;
+  $scope.show3 = false;
+};
+
+$scope.views = function () {
+  $scope.show1 = false;
+  $scope.show2 = true;
+  $scope.show3 = false;
+};
+
+$scope.votes = function () {
+  $scope.show1 = false;
+  $scope.show2 = false;
+  $scope.show3 = true;
 };
 
 /*//Deletes errored video.

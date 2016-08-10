@@ -8,6 +8,11 @@ myApp.config(['$routeProvider', function($routeProvider) {
       controller: "HomeController"
     })
 
+    .when('/login', {
+      templateUrl: '/views/login.html',
+      controller: "LoginController"
+    })
+
     .otherwise({
       redirectTo: '/home'
     });
