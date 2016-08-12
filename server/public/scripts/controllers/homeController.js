@@ -39,8 +39,8 @@ function retrieveAllVideos() {
         $scope.allVideos = response.data.data;
         for (i = 0; i < $scope.allVideos.length; i++) {
         //console.log($scope.allVideos[i].attributes.url);
-        $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("watch?v=", "v/");
-        $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("youtu.be/", "www.youtube.com/v/");
+        //$scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("watch?v=", "v/");
+        //$scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("youtu.be/", "www.youtube.com/v/");
         $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("/vimeo.com/", "/player.vimeo.com/video/");
         $scope.allVideos[i].attributes.url = $sce.trustAsResourceUrl($scope.allVideos[i].attributes.url);
         $scope.allVideos[i].attributes.created_at = moment( new Date($scope.allVideos[i].attributes.created_at)).format('MM/DD/YYYY');

@@ -5,7 +5,6 @@ $scope.auth = {};
 
 //Logs user into Proof API.
 $scope.logIn = function (authInfo) {
-  console.log("HERERERE");
       $http.post('/proofAPI/login', authInfo)
         .then(function (response) {
           if (response.status == 200 ) {
