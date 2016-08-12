@@ -39,12 +39,12 @@
 <div class="allVideos" ng-show="show1" ng-repeat="video in allVideos | orderBy:'attributes.created_at':true">
   <div class="video col-md-6">
     <h4>{{video.attributes.title}}</h4>
-    <h4>Added: {{video.attributes.created_at}}</h4>
+    <h4>Date Added: {{video.attributes.created_at}}</h4>
     <h4>Views: {{video.attributes.view_tally}}</h4>
     <h4>Votes: {{video.attributes.vote_tally}}</h4>
-    <iframe width="420" height="315"
-src="{{video.attributes.url}}">
-</iframe>
+    <button ng-click="upVote(video.id)">Like</button>
+    <button ng-click="downVote(video.id)">Dislike</button>
+    <iframe width="420" height="315" src="{{video.attributes.url}}" ng-click="addView(video.id)"></iframe>
   </div>
 </div>
 
@@ -53,9 +53,7 @@ src="{{video.attributes.url}}">
     <h4>{{video.attributes.title}}</h4>
     <h4>Created: {{video.attributes.created_at}}</h4>
     <h4>Views: {{video.attributes.view_tally}}</h4>
-    <iframe width="420" height="315"
-src="{{video.attributes.url}}">
-</iframe>
+    <iframe width="420" height="315" src="{{video.attributes.url}}"></iframe>
   </div>
 </div>
 
@@ -64,8 +62,6 @@ src="{{video.attributes.url}}">
     <h4>{{video.attributes.title}}</h4>
     <h4>Created: {{video.attributes.created_at}}</h4>
     <h4>Votes: {{video.attributes.vote_tally}}</h4>
-    <iframe width="420" height="315"
-src="{{video.attributes.url}}">
-</iframe>
+    <iframe width="420" height="315" src="{{video.attributes.url}}"></iframe>
   </div>
 </div>
