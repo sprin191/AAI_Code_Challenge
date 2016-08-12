@@ -38,30 +38,31 @@
 
 <div class="allVideos" ng-show="show1" ng-repeat="video in allVideos | orderBy:'attributes.created_at':true">
   <div class="video col-md-6">
-    <h4>{{video.attributes.title}}</h4>
+    <a target="_blank" href="{{video.attributes.url}}" ng-click="addView(video.id)">{{video.attributes.title}}</a>
     <h4>Date Added: {{video.attributes.created_at}}</h4>
-    <h4>Views: {{video.attributes.view_tally}}</h4>
     <h4>Votes: {{video.attributes.vote_tally}}</h4>
+    <h4>Views: {{video.attributes.view_tally}}</h4>
     <button ng-click="upVote(video.id)">Like</button>
     <button ng-click="downVote(video.id)">Dislike</button>
-    <iframe width="420" height="315" src="{{video.attributes.url}}" ng-click="addView(video.id)"></iframe>
   </div>
 </div>
 
 <div class="allVideos" ng-show="show2" ng-repeat="video in allVideos | orderBy:'attributes.view_tally':true | limitTo:10">
   <div class="video col-md-6">
-    <h4>{{video.attributes.title}}</h4>
+    <a target="_blank" href="{{video.attributes.url}}" ng-click="addView(video.id)">{{video.attributes.title}}</a>
     <h4>Created: {{video.attributes.created_at}}</h4>
     <h4>Views: {{video.attributes.view_tally}}</h4>
-    <iframe width="420" height="315" src="{{video.attributes.url}}"></iframe>
+    <button ng-click="upVote(video.id)">Like</button>
+    <button ng-click="downVote(video.id)">Dislike</button>
   </div>
 </div>
 
 <div class="allVideos" ng-show="show3" ng-repeat="video in allVideos | orderBy:'attributes.vote_tally':true | limitTo:10">
   <div class="video col-md-6">
-    <h4>{{video.attributes.title}}</h4>
+    <a target="_blank" href="{{video.attributes.url}}" ng-click="addView(video.id)">{{video.attributes.title}}</a>
     <h4>Created: {{video.attributes.created_at}}</h4>
     <h4>Votes: {{video.attributes.vote_tally}}</h4>
-    <iframe width="420" height="315" src="{{video.attributes.url}}"></iframe>
+    <button ng-click="upVote(video.id)">Like</button>
+    <button ng-click="downVote(video.id)">Dislike</button>
   </div>
 </div>

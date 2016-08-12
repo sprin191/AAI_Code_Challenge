@@ -93,6 +93,23 @@ request({
 });
 });
 
+router.get('/getVotes/:id', function (req, res) {
+var id = req.params.id;
+console.log("got votes!", req.params.id);
+request({
+  method: 'GET',
+  url: 'https://proofapi.herokuapp.com/videos/' + req.params.id + '/votes',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Auth-Token': authToken
+  }}, function (error, response, body) {
+  console.log('Status:', response.statusCode);
+  console.log('Headers:', JSON.stringify(response.headers));
+  console.log('Response:', body);
+  res.send(body);
+});
+});
+
 router.post('/view', function (req, res) {
 console.log("view!", req.body);
 request({
@@ -107,6 +124,7 @@ request({
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
+  res.send(body);
 });
 });
 

@@ -1,4 +1,4 @@
-myApp.controller('HomeController', ['$scope', '$http', '$location', '$window', '$sce', function($scope, $http, $location, $window, $sce)
+myApp.controller('HomeController', ['$scope', '$http', '$location', '$window', '$sce', '$document', function($scope, $http, $location, $window, $sce, $document)
 {
 
 $scope.video = {};
@@ -35,6 +35,7 @@ function logIn () {
       $http.post('/proofAPI/login/')
         .then(function (response) {
           if (response.status == 200 ) {
+            console.log(response);
             console.log("success!");
             retrieveAllVideos();
           } else {
@@ -98,17 +99,7 @@ $http.post('/proofAPI/add-video', body)
 //Up-votes selected video by 1.
 $scope.upVote = function (video_id) {
   if (moment().isoWeekday() !== 6 || 7) {
-  $http.post('/proofAPI/upVote/' + video_id)
-    .then(function (response) {
-      console.log(response);
-      if (response.status == 200 ) {
-        console.log("success!");
-        retrieveAllVideos();
-      } else {
-        console.log("error");
-        return;
-      }
-    });
+    getVotes(video_id);
   } else {
     alert("Voting is only available during business days. Please try again Monday-Friday.");
   }
@@ -118,6 +109,12 @@ $scope.upVote = function (video_id) {
 $scope.downVote = function (video_id) {
   if (moment().isoWeekday() !== 6 || 7) {
   getVotes(video_id);
+  } else {
+    alert("Voting is only available during business days. Please try again Monday-Friday.");
+  }
+};
+
+function downOne (video_id) {
   $http.post('/proofAPI/downVote/' + video_id)
     .then(function (response) {
       if (response.status == 200 ) {
@@ -128,17 +125,15 @@ $scope.downVote = function (video_id) {
         return;
       }
     });
-  } else {
-    alert("Voting is only available during business days. Please try again Monday-Friday.");
-  }
-};
+}
 
 //Retrieves specified video's votes.
 function getVotes (video_id) {
-  $http.get('/proofAPI/getVotes')
+  console.log(video_id);
+  $http.get('/proofAPI/getVotes/' + video_id)
     .then(function (response) {
       if (response.status == 200) {
-        console.log("success!");
+        console.log("vote success!", response.data.data);
       } else {
         console.log("error");
         return;
@@ -148,14 +143,14 @@ function getVotes (video_id) {
 
 //Adds a view to the selected video's data (based on the video's ID).
 $scope.addView = function (video_id) {
-  console.log("made it");
+  //console.log("made it", video_id);
   var id = {
-    'video': video_id
+    'video_id': video_id
   };
   $http.post('/proofAPI/view', id)
     .then(function (response) {
       if (response.status == 200 ) {
-        console.log("success!");
+        console.log("success!", response);
         retrieveAllVideos();
       } else {
         console.log("error");
