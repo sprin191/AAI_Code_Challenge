@@ -4,13 +4,14 @@ var path = require('path');
 var request = require('request');
 
 router.post('/login', function (req, res) {
+  console.log("LOGIN", req.body);
   request({
   method: 'POST',
   url: 'https://proofapi.herokuapp.com/sessions',
   headers: {
     'Content-Type': 'application/json'
   },
-  body: "{  \"email\": \"hannahrspringer@gmail.com\",  \"password\": \"Lusian,epibolic,fortravail\"}"
+  body: JSON.stringify(req.body)
 }, function (error, response, body) {
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));

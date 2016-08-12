@@ -7,7 +7,7 @@ $scope.show1 = true;
 $scope.show2 = false;
 $scope.show3 = false;
 
-logIn();
+retrieveAllVideos();
 
 //Shows all videos (ordered by most-least recently added in html), and hides other views.
 $scope.seeAll = function () {
@@ -29,21 +29,6 @@ $scope.votes = function () {
   $scope.show2 = false;
   $scope.show3 = true;
 };
-
-//Logs user into Proof API.
-function logIn () {
-      $http.post('/proofAPI/login/')
-        .then(function (response) {
-          if (response.status == 200 ) {
-            console.log(response);
-            console.log("success!");
-            retrieveAllVideos();
-          } else {
-            console.log("error");
-            return;
-          }
-        });
-}
 
 //Retrives all videos in the API.
 function retrieveAllVideos() {

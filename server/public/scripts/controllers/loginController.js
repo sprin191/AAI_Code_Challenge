@@ -4,12 +4,13 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', '$window', 
 $scope.auth = {};
 
 //Logs user into Proof API.
-$scope.logIn = function () {
-      $http.post('/proofAPI/login', auth)
+$scope.logIn = function (authInfo) {
+  console.log("HERERERE");
+      $http.post('/proofAPI/login', authInfo)
         .then(function (response) {
           if (response.status == 200 ) {
             console.log("success!");
-            $window.location.href='/home';
+            $window.location.href='#/home';
           } else {
             console.log("error");
             return;
