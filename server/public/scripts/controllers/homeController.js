@@ -7,7 +7,7 @@ $scope.show1 = true;
 $scope.show2 = false;
 $scope.show3 = false;
 
-retrieveAllVideos();
+checkLogin();
 
 //Shows all videos (ordered by most-least recently added in html), and hides other views.
 $scope.seeAll = function () {
@@ -30,6 +30,26 @@ $scope.votes = function () {
   $scope.show3 = true;
 };
 
+//Checks whether user is logged in. If logged in, retrieves all videos from API. If not, redirects to login page.
+function checkLogin() {
+  $http.get('/proofAPI/checkAuth')
+    .then(function (response) {
+      if (response.status == 200) {
+        if (response.data.status === true) {
+          //console.log("success!", response);
+          retrieveAllVideos();
+        }
+        else {
+          //console.log(response);
+          $window.location.href='#/login';
+        }
+      } else {
+        console.log("error");
+        return;
+      }
+    });
+}
+
 //Retrives all videos in the API.
 function retrieveAllVideos() {
   $http.get('/proofAPI/videos')
@@ -39,8 +59,8 @@ function retrieveAllVideos() {
         $scope.allVideos = response.data.data;
         for (i = 0; i < $scope.allVideos.length; i++) {
         //console.log($scope.allVideos[i].attributes.url);
-        //$scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("watch?v=", "v/");
-        //$scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("youtu.be/", "www.youtube.com/v/");
+        //For iFrame embedding: $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("watch?v=", "v/");
+        //For iFrame embedding: $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("youtu.be/", "www.youtube.com/v/");
         $scope.allVideos[i].attributes.url = $scope.allVideos[i].attributes.url.replace("/vimeo.com/", "/player.vimeo.com/video/");
         $scope.allVideos[i].attributes.url = $sce.trustAsResourceUrl($scope.allVideos[i].attributes.url);
         $scope.allVideos[i].attributes.created_at = moment( new Date($scope.allVideos[i].attributes.created_at)).format('MM/DD/YYYY');
@@ -55,7 +75,7 @@ function retrieveAllVideos() {
 
 //Submits a new video.
 $scope.submitVideo = function () {
-if (moment().isoWeekday() !== 6 || 7) {
+if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
 var slug = $scope.video.title.replace(/\s+/g, '-').toLowerCase();
 console.log(slug);
 console.log($scope.video);
@@ -68,6 +88,7 @@ var body = {
 
 $http.post('/proofAPI/add-video', body)
   .then(function (response) {
+    $scope.video = {};
     if (response.status == 200 ) {
       console.log("success!");
       retrieveAllVideos();
@@ -83,8 +104,18 @@ $http.post('/proofAPI/add-video', body)
 
 //Up-votes selected video by 1.
 $scope.upVote = function (video_id) {
-  if (moment().isoWeekday() !== 6 || 7) {
-    getVotes(video_id);
+  if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
+    $http.post('/proofAPI/upVote/' + video_id)
+        .then(function (response) {
+        console.log(response);
+        if (response.status == 200 ) {
+         console.log("success!");
+         retrieveAllVideos();
+        } else {
+        console.log("error");
+         return;
+       }
+     });
   } else {
     alert("Voting is only available during business days. Please try again Monday-Friday.");
   }
@@ -92,8 +123,17 @@ $scope.upVote = function (video_id) {
 
 //Down-votes selected video by 1.
 $scope.downVote = function (video_id) {
-  if (moment().isoWeekday() !== 6 || 7) {
-  getVotes(video_id);
+  if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
+    $http.post('/proofAPI/downVote/' + video_id)
+      .then(function (response) {
+        if (response.status == 200 ) {
+          console.log("success!");
+          retrieveAllVideos();
+        } else {
+          console.log("error");
+          return;
+        }
+      });
   } else {
     alert("Voting is only available during business days. Please try again Monday-Friday.");
   }

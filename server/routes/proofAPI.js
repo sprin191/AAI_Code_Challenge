@@ -3,6 +3,8 @@ var router = express.Router();
 var path = require('path');
 var request = require('request');
 
+var authToken = undefined;
+
 router.post('/login', function (req, res) {
   console.log("LOGIN", req.body);
   request({
@@ -21,6 +23,16 @@ router.post('/login', function (req, res) {
   console.log("HERE", authToken);
   res.send(body);
 });
+});
+
+router.get('/checkAuth', function (req, res) {
+  console.log("HERE - user: " , authToken);
+    if (authToken !== undefined) {
+      console.log('authenticated ', authToken);
+      res.json({ status: true });
+    } else {
+      res.json({ status: false });
+    }
 });
 
 router.get('/videos', function (req, res) {

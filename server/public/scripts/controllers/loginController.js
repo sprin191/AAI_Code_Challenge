@@ -3,7 +3,7 @@ myApp.controller('LoginController', ['$scope', '$http', '$location', '$window', 
 
 $scope.auth = {};
 
-//Logs user into Proof API.
+//Logs user into Proof API, then redirects to home page upon success.
 $scope.logIn = function (authInfo) {
       $http.post('/proofAPI/login', authInfo)
         .then(function (response) {
