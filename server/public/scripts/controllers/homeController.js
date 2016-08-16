@@ -94,6 +94,7 @@ $http.post('/proofAPI/add-video', body)
     $scope.video = {};
     if (response.status == 200 ) {
       //console.log("success!");
+      alert("Submission successful!");
       retrieveAllVideos();
     } else {
       console.log("add video error");
