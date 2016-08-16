@@ -1,4 +1,4 @@
-myApp.controller('HomeController', ['$scope', '$http', '$location', '$window', '$sce', '$document', function($scope, $http, $location, $window, $sce, $document)
+myApp.controller('HomeController', ['$scope', '$http', '$location', '$window', '$sce', function($scope, $http, $location, $window, $sce)
 {
 
 $scope.video = {};

@@ -3,17 +3,17 @@
 <div class="videoForm">
   <h3 class="formTitle">Login</h3>
   <form class="formInfo">
-    <div class="row">
+    <div class="row paddingAdded">
       <label class="col-xs-1" for="auth.email">Email: </label>
       <input type="text" ng-model="auth.email" required/>
     </div>
 
-    <div class="row">
+    <div class="row paddingAdded">
       <label class="col-xs-1" for="auth.password">Password: </label>
       <input type="text" ng-model="auth.password" required/>
     </div>
 
-    <button class="col-xs-2 col-xs-offset-5" type="submit" ng-click="logIn(auth)">Submit</button>
+    <button class="col-xs-1 submitBtn" type="submit" ng-click="logIn(auth)">Submit</button>
     </form>
   </div>
 </div>

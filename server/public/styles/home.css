@@ -2,3 +2,29 @@
   padding: 3%;
   border: #d0d1d5 1px solid;
 }
+
+.headerNav {
+  float: right;
+}
+
+.title {
+  display: inline;
+}
+
+.titleContainer {
+  padding: 2%;
+}
+
+.thumbsUp:hover, .thumbsDown:hover {
+  opacity: .50;
+}
+
+.video {
+  /*border: 1px solid black;*/
+  padding: 2%;
+}
+
+.videoLink {
+  font-size: 20px;
+  font-weight: bold;
+}

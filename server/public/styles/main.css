@@ -13,32 +13,26 @@ main {
   color: white;
 }
 
-.headerTitle, .headerNav, .title {
+.headerTitle, .logout {
   display: inline;
 }
 
-.headerNav {
+.logout {
   float: right;
-}
-
-.titleContainer {
-  padding: 2%;
 }
 
 a:hover {
   cursor: pointer;
 }
 
-.thumbsUp:hover, .thumbsDown:hover {
-  opacity: .50;
+.submitBtn {
+  margin-top: 1%;
 }
 
-.video {
-  /*border: 1px solid black;*/
-  padding: 2%;
+.formTitle {
+  margin-bottom: 1%;
 }
 
-.videoLink {
-  font-size: 20px;
-  font-weight: bold;
+.paddingAdded {
+  padding-top: 0.5%;
 }

@@ -21,9 +21,13 @@ router.post('/login', function (req, res) {
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
   var authResponse = JSON.parse(body);
-  authToken = authResponse.data.attributes.auth_token;
-  console.log("HERE", authToken);
-  res.send(body);
+  if (authResponse.hasOwnProperty('errors')) {
+    res.send(body);
+  } else {
+    authToken = authResponse.data.attributes.auth_token;
+    console.log("HERE", authToken);
+    res.send(body);
+  }
 });
 });
 
@@ -35,6 +39,23 @@ router.get('/checkAuth', function (req, res) {
     } else {
       res.json({ status: false });
     }
+});
+
+router.delete('/logout', function (req, res) {
+  console.log("HERE - user: " , authToken);
+  request({
+method: 'DELETE',
+url: 'https://proofapi.herokuapp.com/sessions/' + authToken,
+headers: {
+  'Content-Type': 'application/json',
+  'X-Auth-Token': authToken
+}}, function (error, response, body) {
+console.log('Status:', response.statusCode);
+console.log('Headers:', JSON.stringify(response.headers));
+console.log('Response:', body);
+authToken = undefined;
+res.send(body);
+});
 });
 
 router.get('/videos', function (req, res) {

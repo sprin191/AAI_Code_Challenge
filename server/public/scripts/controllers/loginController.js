@@ -1,4 +1,4 @@
-myApp.controller('LoginController', ['$scope', '$http', '$location', '$window', '$sce', function($scope, $http, $location, $window, $sce)
+myApp.controller('LoginController', ['$scope', '$http', '$location', '$window', function($scope, $http, $location, $window)
 {
 
 $scope.auth = {};
@@ -8,11 +8,15 @@ $scope.logIn = function (authInfo) {
       $http.post('/proofAPI/login', authInfo)
         .then(function (response) {
           if (response.status == 200 ) {
-            console.log("success!");
-            $window.location.href='#/home';
+            console.log("success!", response);
+            if (response.data.hasOwnProperty('errors')) {
+            alert("Incorrect login credentials. Please try again.");
           } else {
+            $window.location.reload();
+            $window.location.href='#/home';
+          }
+        } else {
             console.log("error");
-            return;
           }
         });
 };
