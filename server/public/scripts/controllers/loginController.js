@@ -8,7 +8,7 @@ $scope.logIn = function (authInfo) {
       $http.post('/proofAPI/login', authInfo)
         .then(function (response) {
           if (response.status == 200 ) {
-            console.log("success!", response);
+            //console.log("success!", response);
             if (response.data.hasOwnProperty('errors')) {
             alert("Incorrect login credentials. Please try again.");
           } else {
@@ -16,7 +16,7 @@ $scope.logIn = function (authInfo) {
             $window.location.href='#/home';
           }
         } else {
-            console.log("error");
+            console.log("login error");
           }
         });
 };

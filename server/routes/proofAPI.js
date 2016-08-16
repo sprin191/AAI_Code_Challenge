@@ -25,16 +25,16 @@ router.post('/login', function (req, res) {
     res.send(body);
   } else {
     authToken = authResponse.data.attributes.auth_token;
-    console.log("HERE", authToken);
+    //console.log("HERE", authToken);
     res.send(body);
   }
 });
 });
 
 router.get('/checkAuth', function (req, res) {
-  console.log("HERE - user: " , authToken);
+  //console.log("HERE - user: " , authToken);
     if (authToken !== undefined) {
-      console.log('authenticated ', authToken);
+      //console.log('authenticated ', authToken);
       res.json({ status: true, email: email});
     } else {
       res.json({ status: false });
@@ -42,7 +42,7 @@ router.get('/checkAuth', function (req, res) {
 });
 
 router.delete('/logout', function (req, res) {
-  console.log("HERE - user: " , authToken);
+  //console.log("HERE - user: " , authToken);
   request({
 method: 'DELETE',
 url: 'https://proofapi.herokuapp.com/sessions/' + authToken,
@@ -74,7 +74,7 @@ request({
 });
 
 router.post('/add-video', function (req, res) {
-console.log(req.body);
+//console.log(req.body);
 request({
   method: 'POST',
   url: 'https://proofapi.herokuapp.com/videos',
@@ -93,7 +93,7 @@ request({
 
 router.post('/upVote/:id', function (req, res) {
 var id = req.params.id;
-console.log("upVote!", req.params.id);
+//console.log("upVote!", req.params.id);
 request({
   method: 'POST',
   url: 'https://proofapi.herokuapp.com/videos/' + req.params.id + '/votes',
@@ -112,7 +112,7 @@ request({
 
 router.post('/downVote/:id', function (req, res) {
 var id = req.params.id;
-console.log("downVote!", req.params.id);
+//console.log("downVote!", req.params.id);
 request({
   method: 'POST',
   url: 'https://proofapi.herokuapp.com/videos/' + req.params.id + '/votes',
@@ -130,7 +130,7 @@ request({
 });
 
 router.post('/view', function (req, res) {
-console.log("view!", req.body);
+//console.log("view!", req.body);
 request({
   method: 'POST',
   url: 'https://proofapi.herokuapp.com/views',

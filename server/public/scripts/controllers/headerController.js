@@ -10,11 +10,11 @@ checkLogin();
     $http.delete('/proofAPI/logout')
     .then(function (response) {
       if (response.status == 200 ) {
-        console.log("logout success!");
+        //console.log("logout success!");
         $scope.showLogoutBtn = false;
         $window.location.href='#/login';
       } else {
-        console.log("error");
+        console.log("logout error");
         return;
       }
     });
@@ -26,14 +26,14 @@ checkLogin();
       .then(function (response) {
         if (response.status == 200) {
           if (response.data.status === true) {
-            console.log("success!", response);
+            //console.log("success!", response);
             $scope.showLogoutBtn = true;
           }
           else {
             $scope.showLogoutBtn = false;
           }
         } else {
-          console.log("error");
+          console.log("check login error");
           return;
         }
       });
