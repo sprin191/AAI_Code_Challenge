@@ -4,9 +4,11 @@ var path = require('path');
 var request = require('request');
 
 var authToken = undefined;
+var email = undefined;
 
 router.post('/login', function (req, res) {
   console.log("LOGIN", req.body);
+  email = req.body.email;
   request({
   method: 'POST',
   url: 'https://proofapi.herokuapp.com/sessions',
@@ -29,7 +31,7 @@ router.get('/checkAuth', function (req, res) {
   console.log("HERE - user: " , authToken);
     if (authToken !== undefined) {
       console.log('authenticated ', authToken);
-      res.json({ status: true });
+      res.json({ status: true, email: email});
     } else {
       res.json({ status: false });
     }
@@ -106,23 +108,6 @@ request({
 });
 });
 
-router.get('/getVotes/:id', function (req, res) {
-var id = req.params.id;
-console.log("got votes!", req.params.id);
-request({
-  method: 'GET',
-  url: 'https://proofapi.herokuapp.com/videos/' + req.params.id + '/votes',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-Auth-Token': authToken
-  }}, function (error, response, body) {
-  console.log('Status:', response.statusCode);
-  console.log('Headers:', JSON.stringify(response.headers));
-  console.log('Response:', body);
-  res.send(body);
-});
-});
-
 router.post('/view', function (req, res) {
 console.log("view!", req.body);
 request({
@@ -140,24 +125,5 @@ request({
   res.send(body);
 });
 });
-
-//Deletes errored video.
-/*router.delete('/:id', function (req, res) {
-var id = req.params.id;
-console.log("delete" + id);
-request({
-  method: 'DELETE',
-  url: 'https://proofapi.herokuapp.com/videos/' + req.params.id,
-  headers: {
-    'Content-Type': 'application/json',
-    'X-Auth-Token': authToken
-  }}, function (error, response, body) {
-  console.log('Status:', response.statusCode);
-  console.log('Headers:', JSON.stringify(response.headers));
-  console.log('Response:', body);
-});
-});*/
-
-
 
 module.exports = router;

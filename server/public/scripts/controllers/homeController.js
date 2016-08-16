@@ -36,7 +36,7 @@ function checkLogin() {
     .then(function (response) {
       if (response.status == 200) {
         if (response.data.status === true) {
-          //console.log("success!", response);
+          console.log("success!", response);
           retrieveAllVideos();
         }
         else {
@@ -102,69 +102,79 @@ $http.post('/proofAPI/add-video', body)
 }
 };
 
-//Up-votes selected video by 1.
+//Up-votes selected video by 1 if it is a business day, and the user has not yet voted that day.
 $scope.upVote = function (video_id) {
-  if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
-    $http.post('/proofAPI/upVote/' + video_id)
-        .then(function (response) {
-        console.log(response);
-        if (response.status == 200 ) {
-         console.log("success!");
-         retrieveAllVideos();
-        } else {
-        console.log("error");
-         return;
-       }
-     });
-  } else {
-    alert("Voting is only available during business days. Please try again Monday-Friday.");
+  var id = video_id;
+  if (localStorage.getItem("lastVote") === null) {
+    lastVoteDate = new Object;
   }
-};
-
-//Down-votes selected video by 1.
-$scope.downVote = function (video_id) {
-  if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
-    $http.post('/proofAPI/downVote/' + video_id)
-      .then(function (response) {
-        if (response.status == 200 ) {
-          console.log("success!");
-          retrieveAllVideos();
+  else {
+    lastVoteDate = JSON.parse(localStorage.getItem("lastVote"));
+  }
+  console.log(lastVoteDate);
+  var newVoteDate = moment().format('MM/DD/YYYY');
+    if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
+        if (lastVoteDate[id] === undefined || newVoteDate !== lastVoteDate[id]) {
+          $http.post('/proofAPI/upVote/' + video_id)
+          .then(function (response) {
+            console.log(response);
+            if (response.status == 200 ) {
+              console.log("success!");
+              console.log(id);
+              lastVoteDate[id] = newVoteDate;
+              console.log(lastVoteDate[id]);
+              localStorage.setItem("lastVote", JSON.stringify(lastVoteDate));
+              console.log(lastVoteDate);
+              retrieveAllVideos();
+            } else {
+              console.log("error");
+              return;
+            }
+          });
         } else {
-          console.log("error");
-          return;
+          alert("You have already voted on this video once today. Please try again tomorrow.");
         }
-      });
-  } else {
-    alert("Voting is only available during business days. Please try again Monday-Friday.");
+      } else {
+        alert("Voting is only available during business days. Please try again Monday-Friday.");
+      }
+    };
+
+//Down-votes selected video by 1 if it is a business day, and the user has not yet voted that day.
+$scope.downVote = function (video_id) {
+  var id = video_id;
+  if (localStorage.getItem("lastVote") === null) {
+    lastVoteDate = new Object;
   }
-};
-
-function downOne (video_id) {
-  $http.post('/proofAPI/downVote/' + video_id)
-    .then(function (response) {
-      if (response.status == 200 ) {
-        console.log("success!");
-        retrieveAllVideos();
+  else {
+    lastVoteDate = JSON.parse(localStorage.getItem("lastVote"));
+  }
+  console.log(lastVoteDate);
+  var newVoteDate = moment().format('MM/DD/YYYY');
+    if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
+        if (lastVoteDate[id] === undefined || newVoteDate !== lastVoteDate[id]) {
+          $http.post('/proofAPI/downVote/' + video_id)
+          .then(function (response) {
+            console.log(response);
+            if (response.status == 200 ) {
+              console.log("success!");
+              console.log(id);
+              lastVoteDate[id] = newVoteDate;
+              console.log(lastVoteDate[id]);
+              localStorage.setItem("lastVote", JSON.stringify(lastVoteDate));
+              console.log(lastVoteDate);
+              retrieveAllVideos();
+            } else {
+              console.log("error");
+              return;
+            }
+          });
+        } else {
+          alert("You have already voted on this video once today. Please try again tomorrow.");
+        }
       } else {
-        console.log("error");
-        return;
+        alert("Voting is only available during business days. Please try again Monday-Friday.");
       }
-    });
-}
-
-//Retrieves specified video's votes.
-function getVotes (video_id) {
-  console.log(video_id);
-  $http.get('/proofAPI/getVotes/' + video_id)
-    .then(function (response) {
-      if (response.status == 200) {
-        console.log("vote success!", response.data.data);
-      } else {
-        console.log("error");
-        return;
-      }
-    });
-}
+    };
 
 //Adds a view to the selected video's data (based on the video's ID).
 $scope.addView = function (video_id) {
@@ -176,6 +186,7 @@ $scope.addView = function (video_id) {
     .then(function (response) {
       if (response.status == 200 ) {
         console.log("success!", response);
+        //getViews();
         retrieveAllVideos();
       } else {
         console.log("error");
@@ -183,15 +194,5 @@ $scope.addView = function (video_id) {
       }
     });
 };
-
-/*//Deletes errored video.
-function deleteVid () {
-var id = "575989a6-6d3d-429c-b1b6-7d2daca80185";
-  $http.delete('/proofAPI/' + id)
-    .then(function (response) {
-      console.log("delete success!");
-      return;
-    });
-}*/
 
 }]);
