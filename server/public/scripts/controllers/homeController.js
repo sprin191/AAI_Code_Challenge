@@ -7,6 +7,8 @@ $scope.show1 = true;
 $scope.show2 = false;
 $scope.show3 = false;
 
+var email = undefined;
+
 checkLogin();
 
 //Shows all videos (ordered by most-least recently added in html), and hides other views.
@@ -37,6 +39,7 @@ function checkLogin() {
       if (response.status == 200) {
         if (response.data.status === true) {
           console.log("success!", response);
+          email = response.data.email;
           retrieveAllVideos();
         }
         else {
@@ -105,76 +108,116 @@ $http.post('/proofAPI/add-video', body)
 //Up-votes selected video by 1 if it is a business day, and the user has not yet voted that day.
 $scope.upVote = function (video_id) {
   var id = video_id;
+  var newVoteDate = moment().format('MM/DD/YYYY');
+  var matchNumber = undefined;
+  console.log(email);
   if (localStorage.getItem("lastVote") === null) {
     lastVoteDate = new Object;
+    lastVoteDate.users = [];
+    lastVoteDate.users.push({email : email});
+    console.log(lastVoteDate);
   }
   else {
     lastVoteDate = JSON.parse(localStorage.getItem("lastVote"));
+    var found = false;
+    for (var i = 0; i < lastVoteDate.users.length; i++) {
+      if (lastVoteDate.users[i].email === email) {
+        found = true;
+      }
+    }
+      if (found === false) {
+        lastVoteDate.users.push({email : email});
+      }
   }
-  console.log(lastVoteDate);
-  var newVoteDate = moment().format('MM/DD/YYYY');
+
     if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
-        if (lastVoteDate[id] === undefined || newVoteDate !== lastVoteDate[id]) {
-          $http.post('/proofAPI/upVote/' + video_id)
-          .then(function (response) {
-            console.log(response);
-            if (response.status == 200 ) {
-              console.log("success!");
-              console.log(id);
-              lastVoteDate[id] = newVoteDate;
-              console.log(lastVoteDate[id]);
-              localStorage.setItem("lastVote", JSON.stringify(lastVoteDate));
-              console.log(lastVoteDate);
-              retrieveAllVideos();
-            } else {
-              console.log("error");
-              return;
-            }
-          });
+      for (var j = 0; j < lastVoteDate.users.length; j++) {
+        if (lastVoteDate.users[j].email === email) {
+          matchNumber = j;
+        }
+      }
+          if (lastVoteDate.users[matchNumber][id] === undefined || newVoteDate !== lastVoteDate.users[matchNumber][id]) {
+              $http.post('/proofAPI/upVote/' + video_id)
+              .then(function (response) {
+                console.log(response);
+                if (response.status == 200 ) {
+                  console.log("success!");
+                  console.log(id);
+                  console.log(matchNumber);
+                  lastVoteDate.users[matchNumber][id] = newVoteDate;
+                  console.log(lastVoteDate.users[matchNumber][id]);
+                  localStorage.setItem("lastVote", JSON.stringify(lastVoteDate));
+                  console.log(lastVoteDate);
+                  retrieveAllVideos();
+                } else {
+                  console.log("error");
+                  return;
+                }
+              });
         } else {
           alert("You have already voted on this video once today. Please try again tomorrow.");
         }
-      } else {
-        alert("Voting is only available during business days. Please try again Monday-Friday.");
-      }
-    };
+  } else {
+    alert("Voting is only available during business days. Please try again Monday-Friday.");
+  }
+};
 
 //Down-votes selected video by 1 if it is a business day, and the user has not yet voted that day.
 $scope.downVote = function (video_id) {
   var id = video_id;
+  var newVoteDate = moment().format('MM/DD/YYYY');
+  var matchNumber = undefined;
+  console.log(email);
   if (localStorage.getItem("lastVote") === null) {
     lastVoteDate = new Object;
+    lastVoteDate.users = [];
+    lastVoteDate.users.push({email : email});
+    console.log(lastVoteDate);
   }
   else {
     lastVoteDate = JSON.parse(localStorage.getItem("lastVote"));
+    var found = false;
+    for (var i = 0; i < lastVoteDate.users.length; i++) {
+      if (lastVoteDate.users[i].email === email) {
+        found = true;
+      }
+    }
+      if (found === false) {
+        lastVoteDate.users.push({email : email});
+      }
   }
-  console.log(lastVoteDate);
-  var newVoteDate = moment().format('MM/DD/YYYY');
+
     if (moment().isoWeekday() !== 6 && moment().isoWeekday() !== 7) {
-        if (lastVoteDate[id] === undefined || newVoteDate !== lastVoteDate[id]) {
-          $http.post('/proofAPI/downVote/' + video_id)
-          .then(function (response) {
-            console.log(response);
-            if (response.status == 200 ) {
-              console.log("success!");
-              console.log(id);
-              lastVoteDate[id] = newVoteDate;
-              console.log(lastVoteDate[id]);
-              localStorage.setItem("lastVote", JSON.stringify(lastVoteDate));
-              console.log(lastVoteDate);
-              retrieveAllVideos();
-            } else {
-              console.log("error");
-              return;
-            }
-          });
+      for (var j = 0; j < lastVoteDate.users.length; j++) {
+        if (lastVoteDate.users[j].email === email) {
+          matchNumber = j;
+        }
+      }
+          if (lastVoteDate.users[matchNumber][id] === undefined || newVoteDate !== lastVoteDate.users[matchNumber][id]) {
+              $http.post('/proofAPI/downVote/' + video_id)
+              .then(function (response) {
+                console.log(response);
+                if (response.status == 200 ) {
+                  console.log("success!");
+                  console.log(id);
+                  console.log(matchNumber);
+                  lastVoteDate.users[matchNumber][id] = newVoteDate;
+                  console.log(lastVoteDate.users[matchNumber][id]);
+                  localStorage.setItem("lastVote", JSON.stringify(lastVoteDate));
+                  console.log(lastVoteDate);
+                  retrieveAllVideos();
+                } else {
+                  console.log("error");
+                  return;
+                }
+              });
         } else {
           alert("You have already voted on this video once today. Please try again tomorrow.");
         }
-      } else {
-        alert("Voting is only available during business days. Please try again Monday-Friday.");
-      }
-    };
+  } else {
+    alert("Voting is only available during business days. Please try again Monday-Friday.");
+  }
+};
 
 //Adds a view to the selected video's data (based on the video's ID).
 $scope.addView = function (video_id) {
