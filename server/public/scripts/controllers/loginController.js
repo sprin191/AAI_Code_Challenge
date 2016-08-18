@@ -12,8 +12,8 @@ $scope.logIn = function (authInfo) {
             if (response.data.hasOwnProperty('errors')) {
             alert("Incorrect login credentials. Please try again.");
           } else {
-            $window.location.reload();
             $window.location.href='#/home';
+            $window.location.reload();
           }
         } else {
             console.log("login error");
