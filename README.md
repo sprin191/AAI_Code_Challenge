@@ -1,6 +1,6 @@
 # AAI_Code_Challenge
 
-Challenge Description: Employees at August Ash (AAI) are good-natured. We love to watch and share funny or creative videos with each other. AAI would like an application that allows employees to maintain a list of curated video links, view top ten lists, and to submit and rate linked videos. 
+Challenge Description: Employees at AAI are good-natured. We love to watch and share funny or creative videos with each other. AAI would like an application that allows employees to maintain a list of curated video links, view top ten lists, and to submit and rate linked videos. 
 
 User Scenarios:
 1) As an employee, I would like to see all video links with the most recent first so that I can quickly view which excellent videos my teammates are posting. 
